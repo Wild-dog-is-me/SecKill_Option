@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dog.server.mapper.StockMapper">
+
+    <update id="updateByOptimistic" parameterType="org.dog.server.entity.Stock">
+        update stock
+        <set>
+            sale = sale + 1,
+            version = version + 1
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+        AND version = #{version,jdbcType=INTEGER}
+    </update>
+    <select id="selectByPrimaryKeyForUpdate" resultType="org.dog.server.entity.Stock" parameterType="int">
+        select *
+        from stock
+        where id = #{id,jdbcType=INTEGER}
+            FOR
+        UPDATE
+    </select>
+</mapper>
